@@ -16,5 +16,4 @@ SQLAlchemy==2.0.25
 starlette==0.35.1
 typing_extensions==4.9.0
 uvicorn==0.18.2
-pydantic[email]==1.8.2
 email-validator==2.1.0
