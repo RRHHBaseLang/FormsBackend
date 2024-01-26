@@ -76,6 +76,7 @@ async def Crear(data: UserName, authenticated_user=Depends(get_authenticated_use
     mailCreador = session.query(LoginDB).filter_by(
         _id=idcreador).first().correo
     newdata['Creadopor'] = mailCreador
+    newdata['respComent'] = {}
     modelo_sqlalchemy = convertir_pydantic_a_sqlalchemy(
         newdata, CodigosDb
     )
