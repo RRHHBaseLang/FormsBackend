@@ -9,8 +9,10 @@ def is_test_started(user, test_id):
     try:
         comentarios = user.respComent
         print(comentarios)
+        print (comentarios.get(test_id).get('status')!="")
         return comentarios.get(test_id).get('status')!=""
     except:
+        print("Error al leer los comentarios")
         return True
 
 
