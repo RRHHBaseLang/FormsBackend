@@ -10,6 +10,8 @@ def is_test_started(user, test_id):
         comentarios = user.respComent
         print(comentarios)
         print(comentarios.get(test_id).get('status'))
+        if comentarios.get(test_id).get('status')==None:
+            return False
         print (comentarios.get(test_id).get('status')!="")
         return comentarios.get(test_id).get('status')!=""
     except:
