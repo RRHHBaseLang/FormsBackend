@@ -11,7 +11,7 @@ def is_test_started(user, test_id):
         print(comentarios)
         return comentarios.get(test_id).get('status')!=""
     except:
-        return False
+        return True
 
 
 def confirm_user_authorization(usable_id, test_id):
