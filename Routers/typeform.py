@@ -23,9 +23,9 @@ def convertir_pydantic_a_sqlalchemy(modelo_pydantic: dict, modelo_sqlalchemy: Ty
 
 def handle_database_errors(func):
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            return await func(*args, **kwargs)
         except (exc.OperationalError, exc.IntegrityError) as e:
             session.rollback()
             raise HTTPException(
