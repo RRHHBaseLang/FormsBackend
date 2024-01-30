@@ -23,18 +23,16 @@ def convertir_pydantic_a_sqlalchemy(modelo_pydantic: dict, modelo_sqlalchemy: Ty
 
 def handle_database_errors(func):
     @functools.wraps(func)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(*args, **kwargs):
         try:
-            return func(self, *args, **kwargs)
-        except exc.OperationalError:
-            try:
-                session.rollback()
-            except exc.OperationalError as e:
-                raise HTTPException(
-                    status_code=500, detail=f"Error de reconexión: {str(e)}"
-                )
-            return func(self, *args, **kwargs)
+            return func(*args, **kwargs)
+        except (exc.OperationalError, exc.IntegrityError) as e:
+            session.rollback()
+            raise HTTPException(
+                status_code=500, detail=f"Database error: {str(e)}"
+            ) from e
     return wrapper
+
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="Security/Login")
