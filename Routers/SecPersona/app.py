@@ -19,7 +19,6 @@ def handle_database_errors(func):
             ) from e
     return wrapper
 
-@handle_database_errors
 def is_test_started(user, test_id):
     try:
         comentarios = user.respComent
@@ -33,7 +32,6 @@ def is_test_started(user, test_id):
         print("Error al leer los comentarios")
         return False
 
-@handle_database_errors
 def confirm_user_authorization(usable_id, test_id):
     user = session.query(CodigosDb).filter_by(_id=usable_id).first()
 
@@ -53,7 +51,6 @@ def confirm_user_authorization(usable_id, test_id):
 
     return user
 
-@handle_database_errors
 def confirm_user_authorization2(usable_id, test_id):
     user = session.query(CodigosDb).filter_by(_id=usable_id).first()
 
@@ -74,7 +71,7 @@ def confirm_user_authorization2(usable_id, test_id):
 
 @router.post("/login")
 @handle_database_errors
-def login(usable_id, test_id):
+async def login(usable_id, test_id):
     user = confirm_user_authorization(usable_id, test_id)
     lastcoments = user.respComent
     try:
@@ -88,7 +85,6 @@ def login(usable_id, test_id):
 
     return {"token": user._id}
 
-@handle_database_errors
 def update_test_status(usable_id, data, status):
     form_id, response_id = data.formId, data.responseId
     user = confirm_user_authorization(usable_id, form_id)
@@ -100,7 +96,6 @@ def update_test_status(usable_id, data, status):
         {CodigosDb.respComent: user.respComent})
     session.commit()
 
-@handle_database_errors
 def update_test_status2(usable_id, data, status):
     form_id, response_id = data.formId, data.responseId
     user = confirm_user_authorization2(usable_id, form_id)
@@ -115,23 +110,23 @@ def update_test_status2(usable_id, data, status):
 
 @router.post("/start")
 @handle_database_errors
-def start_test(usable_id, data: testModel):
+async def start_test(usable_id, data: testModel):
     update_test_status(usable_id, data, 'comenzado')
 
 
 @router.post("/over")
 @handle_database_errors
-def time_over(usable_id, data: testModel):
+async def time_over(usable_id, data: testModel):
     update_test_status2(usable_id, data, 'Time over')
 
 
 @router.post("/out")
 @handle_database_errors
-def out_of_page(usable_id, data: testModel):
+async def out_of_page(usable_id, data: testModel):
     update_test_status2(usable_id, data, 'out of page')
 
 
 @router.post("/finish")
 @handle_database_errors
-def finish_test(usable_id, data: testModel):
+async def finish_test(usable_id, data: testModel):
     update_test_status2(usable_id, data, 'finished')

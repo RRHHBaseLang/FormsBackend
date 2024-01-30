@@ -44,7 +44,6 @@ async def get_authenticated_user(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     return auth
 
-@handle_database_errors
 def _verify_token(token, decoded_token):
     if not decoded_token or not decoded_token.get('sub') or not decoded_token.get('exp'):
         raise HTTPException(
