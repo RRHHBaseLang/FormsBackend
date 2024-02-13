@@ -50,7 +50,7 @@ def Login(email: str, password: str):
     if user:
         stored_password = user.contrasena
 
-        if bcrypt.checkpw(password.encode('utf-8'), bytes(stored_password)):
+        if bcrypt.checkpw(password.encode('utf-8'), stored_password):
             print("Credenciales correctas")
             token = generarToken(user)
             adapter.update(user._id, {'token': token})
