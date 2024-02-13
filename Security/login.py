@@ -4,7 +4,7 @@ from jose import jwt
 from datetime import datetime, timedelta
 from fastapi import HTTPException
 from Security.db import CRUDAdapter
-
+import binascii
 
 def convertir_a_diccionario(user):
     # Convertir los datos relevantes a un diccionario
@@ -50,7 +50,9 @@ def Login(email: str, password: str):
     if user:
         stored_password = user.contrasena
 
-        if bcrypt.checkpw(password.encode('utf-8'), stored_password):
+
+
+        if bcrypt.checkpw(password.encode('utf-8'), bytes(stored_password.encode('utf-8'))):
             print("Credenciales correctas")
             token = generarToken(user)
             adapter.update(user._id, {'token': token})

@@ -7,7 +7,7 @@ import time
 
 def establish_connection():
     return create_engine(
-        f'{os.getenv("DATABASE_URL") or "postgresql://dbtype_user:zp5uFbyt5N7H28vO3d9PcAO7ng0R7n0T@dpg-cmp7l3fqd2ns738pa3h0-a.oregon-postgres.render.com/dbtype"}',
+        f'{os.getenv("DATABASE_URL") or "postgresql://RRHHBaseLang:Z3SPEOQj8wvs@ep-icy-math-a58907mm.us-east-2.aws.neon.tech/neondb"}',
         connect_args={'sslmode': 'allow'}
 
     )

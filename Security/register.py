@@ -23,7 +23,7 @@ def Registrar(Data: Register):
 
             # Hashear la contraseña antes de almacenarla usando bcrypt
             hashed_password = bcrypt.hashpw(
-                newdata['contrasena'].encode('utf-8'), bcrypt.gensalt())
+                newdata['contrasena'].encode('utf-8'), bcrypt.gensalt(10))
             newdata['contrasena'] = hashed_password.decode(
                 'utf-8')  # Decodificar el hash a una cadena
 
