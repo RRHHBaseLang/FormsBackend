@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy-docker-image:
     runs-on: self-hosted
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -15,9 +16,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-fastapi-app .
 
-      - name: Eliminar contenedores anteriores
-        run: docker ps -a | grep my-fastapi-app | awk '{print $1}' | xargs docker rm
-        
-      - name: Deploy Docker image
-        run: docker run -d  --name my-fastapi-app -p 10000:10000 my-fastapi-app
+      - name: Eliminar contenedores anteriores (Remove previous containers)
+        run: |
+          if [[ $(docker ps -a | grep -c my-fastapi-app) -gt 0 ]]; then
+            docker stop my-fastapi-app
+            docker rm my-fastapi-app
+          fi
 
+      - name: Deploy Docker image (detached mode)
+        run: docker run -d --name my-fastapi-app -p 10000:10000 my-fastapi-app
