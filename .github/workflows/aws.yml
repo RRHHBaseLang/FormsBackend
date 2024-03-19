@@ -1,0 +1,23 @@
+name: Despliegue continuo FastAPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy-docker-image:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t my-fastapi-app .
+
+      - name: Eliminar contenedores anteriores
+        run: docker ps -a | grep my-fastapi-app | awk '{print $1}' | xargs docker rm
+        
+      - name: Deploy Docker image
+        run: docker run -d  --name my-fastapi-app -p 10000:10000 my-fastapi-app
+
