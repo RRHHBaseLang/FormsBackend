@@ -24,4 +24,4 @@ jobs:
           fi
 
       - name: Deploy Docker image (detached mode)
-        run: docker run -d --name my-fastapi-app -p 10000:10000 my-fastapi-app
+        run: docker run -d  --restart always --name my-fastapi-app -p 10000:10000 my-fastapi-app
