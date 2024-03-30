@@ -8,8 +8,6 @@ import time
 def establish_connection():
     return create_engine(
         f'{os.getenv("DATABASE_URL") or "postgresql://postgres:postgres@localhost/blforms"}',
-        connect_args={'sslmode': 'allow'}
-
     )
 
 
