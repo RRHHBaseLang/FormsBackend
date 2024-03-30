@@ -14,14 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t my-fastapi-app .
+        run: sudo docker build -t my-fastapi-app .
 
       - name: Eliminar contenedores anteriores (Remove previous containers)
         run: |
           if [[ $(docker ps -a | grep -c my-fastapi-app) -gt 0 ]]; then
-            docker stop my-fastapi-app
-            docker rm my-fastapi-app
+            sudo docker stop my-fastapi-app
+            sudo docker rm my-fastapi-app
           fi
 
       - name: Deploy Docker image (detached mode)
-        run: docker run -d  --restart always --name my-fastapi-app -p 10000:10000 my-fastapi-app
+        run: sudo docker run -d  --restart always --name my-fastapi-app -p 10000:10000 my-fastapi-app
