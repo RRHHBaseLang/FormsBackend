@@ -18,7 +18,7 @@ jobs:
 
       - name: Eliminar contenedores anteriores (Remove previous containers)
         run: |
-          if [[ $(docker ps -a | grep -c my-fastapi-app) -gt 0 ]]; then
+          if [[ $(sudo docker ps -a | grep -c my-fastapi-app) -gt 0 ]]; then
             sudo docker stop my-fastapi-app
             sudo docker rm my-fastapi-app
           fi
