@@ -7,7 +7,7 @@ import time
 
 def establish_connection():
     return create_engine(
-        f'{os.getenv("DATABASE_URL") or "postgresql://postgres:postgres@localhost/blforms"}',
+        f'{os.getenv("DATABASE_URL") or "postgresql://postgres:postgres@18.231.187.223/blforms"}',
     )
 
 
