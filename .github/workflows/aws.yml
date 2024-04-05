@@ -9,7 +9,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Install dependencies
-        run: DIR=./.venv
+        run: |
+          DIR=./.venv
           if [ -d "$DIR" ]; then
             sudo rm -r "$DIR"
           fi
