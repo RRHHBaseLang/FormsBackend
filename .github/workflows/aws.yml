@@ -1,27 +1,20 @@
-name: Despliegue continuo FastAPI
+name: Restart FastAPI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-deploy-docker-image:
+  restart:
     runs-on: self-hosted
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: sudo docker build -t my-fastapi-app .
-
-      - name: Eliminar contenedores anteriores (Remove previous containers)
+      - name: Install dependencies
         run: |
-          if [[ $(sudo docker ps -a | grep -c my-fastapi-app) -gt 0 ]]; then
-            sudo docker stop my-fastapi-app
-            sudo docker rm my-fastapi-app
-          fi
+          sudo ./.venv/bin/python3.11 -m pip install -r requirements.txt
 
-      - name: Deploy Docker image (detached mode)
-        run: sudo docker run -d  --restart always --name my-fastapi-app -p 10000:10000 my-fastapi-app
+      - name: Restart FastAPI service
+        run: sudo systemctl restart backendfastapi.service
