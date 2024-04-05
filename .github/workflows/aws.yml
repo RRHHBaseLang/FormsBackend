@@ -13,10 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          paths:
-            - ./*
-            - !'.venv'
-
+          fetch-depth: 0  # Optional: Only fetch the latest commit to save time
+          submodules: true
+          exclude: '**/*/.venv' 
       - name: Install dependencies
         run: |
           sudo ./.venv/bin/python3.11 -m pip install -r requirements.txt
