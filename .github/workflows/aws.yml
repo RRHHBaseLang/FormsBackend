@@ -13,6 +13,10 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo python3.11 -m venv .venv
+        
       - name: Install dependencies
         run: |
           sudo ./.venv/bin/python3.11 -m pip install -r requirements.txt
