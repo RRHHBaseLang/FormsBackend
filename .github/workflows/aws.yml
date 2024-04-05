@@ -12,14 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          paths:
+            - ./*
+            - !'.venv'
 
       - name: Install dependencies
         run: |
           sudo ./.venv/bin/python3.11 -m pip install -r requirements.txt
-      
-      - name: Install dependencies
-        run: |
-          sudo systemctl stop backendfastapi.service
 
       - name: Restart FastAPI service
         run: sudo systemctl restart backendfastapi.service
